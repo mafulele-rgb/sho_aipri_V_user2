@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#f472b6">
+<meta name="theme-color" content="#7dd9a0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="アイプリ管理">
@@ -13,78 +13,78 @@
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;background:#fdf2f8;overscroll-behavior:none}
+body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;background:#f2fcf6;overscroll-behavior:none}
 .app{max-width:480px;margin:0 auto;background:#fff;min-height:100dvh;display:flex;flex-direction:column}
-.topbar{background:#f472b6;padding:12px 16px;display:flex;align-items:center;gap:10px;color:#fff;position:sticky;top:0;z-index:100;min-height:52px}
+.topbar{background:#7dd9a0;padding:12px 16px;display:flex;align-items:center;gap:10px;color:#fff;position:sticky;top:0;z-index:100;min-height:52px}
 .topbar .t-back{background:none;border:none;color:#fff;cursor:pointer;padding:4px;font-size:20px;line-height:1;display:flex}
 .topbar .t-title{font-size:16px;font-weight:500;flex:1}
 .topbar .t-icon{background:none;border:none;color:#fff;cursor:pointer;padding:4px;font-size:20px;line-height:1;display:flex}
 .content{flex:1;overflow-y:auto;padding:12px;padding-bottom:72px;padding-top:8px}
-.bottombar{background:#fff;border-top:1px solid #f9a8d4;padding:8px 0 12px;display:flex;justify-content:space-around;position:sticky;bottom:0}
+.bottombar{background:#fff;border-top:1px solid #a8ecc0;padding:8px 0 12px;display:flex;justify-content:space-around;position:sticky;bottom:0}
 .bottombar button{background:none;border:none;cursor:pointer;color:#9ca3af;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0 16px}
 .bottombar button i{font-size:22px}
-.bottombar button.active{color:#f472b6}
+.bottombar button.active{color:#7dd9a0}
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:#1D9E75;color:#fff;padding:8px 20px;border-radius:20px;font-size:13px;opacity:0;transition:all 0.3s;pointer-events:none;z-index:999;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.loading{display:flex;align-items:center;justify-content:center;padding:40px;flex-direction:column;gap:12px;color:#f9a8d4}
-.spinner{width:32px;height:32px;border:3px solid #fce7f3;border-top-color:#f472b6;border-radius:50%;animation:spin 0.8s linear infinite}
+.loading{display:flex;align-items:center;justify-content:center;padding:40px;flex-direction:column;gap:12px;color:#a8ecc0}
+.spinner{width:32px;height:32px;border:3px solid #e6faf0;border-top-color:#7dd9a0;border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.error-box{background:#fce7f3;border:1px solid #f9a8d4;border-radius:12px;padding:16px;text-align:center;color:#be185d;font-size:14px;margin:16px 0}
-.updating-bar{background:#fce7f3;color:#be185d;font-size:11px;text-align:center;padding:4px;display:none}
+.error-box{background:#e6faf0;border:1px solid #a8ecc0;border-radius:12px;padding:16px;text-align:center;color:#2d8a52;font-size:14px;margin:16px 0}
+.updating-bar{background:#e6faf0;color:#2d8a52;font-size:11px;text-align:center;padding:4px;display:none}
 .updating-bar.show{display:block}
 .saving-bar{background:#d1fae5;color:#065f46;font-size:11px;text-align:center;padding:4px;display:none}
 .saving-bar.show{display:block}
-.search-bar{background:#fff;border-bottom:1px solid #f9a8d4;padding:8px 12px;position:sticky;top:52px;z-index:90}
+.search-bar{background:#fff;border-bottom:1px solid #a8ecc0;padding:8px 12px;position:sticky;top:52px;z-index:90}
 .search-box{position:relative}
-.search-box i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#f9a8d4;font-size:16px;pointer-events:none}
-.search-input{width:100%;padding:9px 12px 9px 34px;border:1px solid #f9a8d4;border-radius:20px;font-size:14px;background:#fdf2f8;outline:none}
-.search-input:focus{border-color:#f472b6}
+.search-box i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#a8ecc0;font-size:16px;pointer-events:none}
+.search-input{width:100%;padding:9px 12px 9px 34px;border:1px solid #a8ecc0;border-radius:20px;font-size:14px;background:#f2fcf6;outline:none}
+.search-input:focus{border-color:#7dd9a0}
 .dan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.dan-card{background:#fff;border:1px solid #f9a8d4;border-radius:16px;overflow:hidden;cursor:pointer}
-.dan-card:active{background:#fce7f3}
-.dan-img{aspect-ratio:1;background:#fdf2f8;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.dan-card{background:#fff;border:1px solid #a8ecc0;border-radius:16px;overflow:hidden;cursor:pointer}
+.dan-card:active{background:#e6faf0}
+.dan-img{aspect-ratio:1;background:#f2fcf6;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .dan-img img{width:100%;height:100%;object-fit:cover}
 .dan-footer{padding:8px 10px}
 .dan-name{font-size:13px;font-weight:600;color:#374151}
 .dan-meta{font-size:12px;color:#9ca3af;margin-top:2px}
-.pct-bar{height:4px;background:#fce7f3;border-radius:2px;margin-top:6px}
-.pct-fill{height:100%;background:#f472b6;border-radius:2px}
+.pct-bar{height:4px;background:#e6faf0;border-radius:2px;margin-top:6px}
+.pct-fill{height:100%;background:#7dd9a0;border-radius:2px}
 .item-list{display:flex;flex-direction:column;gap:8px}
-.item-row{display:flex;align-items:center;gap:10px;padding:10px;background:#fff;border:1px solid #f9a8d4;border-radius:14px;cursor:pointer}
-.item-row:active{background:#fdf2f8}
+.item-row{display:flex;align-items:center;gap:10px;padding:10px;background:#fff;border:1px solid #a8ecc0;border-radius:14px;cursor:pointer}
+.item-row:active{background:#f2fcf6}
 .item-row.complete{border-color:#1D9E75;border-width:1.5px}
-.item-thumb{width:56px;height:56px;border-radius:10px;background:#fdf2f8;overflow:hidden;flex-shrink:0}
+.item-thumb{width:56px;height:56px;border-radius:10px;background:#f2fcf6;overflow:hidden;flex-shrink:0}
 .item-thumb img{width:100%;height:100%;object-fit:cover}
-.item-thumb .no-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#f9a8d4;font-size:22px}
+.item-thumb .no-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#a8ecc0;font-size:22px}
 .item-info{flex:1;min-width:0}
 .item-name-row{display:flex;align-items:center;gap:4px;margin-bottom:5px}
-.heart{color:#f472b6;font-size:13px}
+.heart{color:#7dd9a0;font-size:13px}
 .item-iname{font-size:13px;font-weight:500;color:#374151;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .parts-row{display:flex;gap:5px;flex-wrap:wrap}
 .part-chip{padding:2px 7px;border-radius:10px;font-size:11px;font-weight:500}
-.part-chip.zero{background:#fce7f3;color:#be185d}
+.part-chip.zero{background:#e6faf0;color:#2d8a52}
 .part-chip.has{background:#d1fae5;color:#065f46}
 .part-chip.extra{background:#fef3c7;color:#92400e}
 .detail-header{display:flex;flex-direction:column;align-items:center;margin-bottom:20px}
-.detail-img{width:160px;height:160px;object-fit:cover;border-radius:16px;border:2px solid #f9a8d4;display:block}
-.detail-name{font-size:15px;font-weight:600;color:#f472b6;margin-top:12px;text-align:center;display:flex;align-items:center;gap:6px}
+.detail-img{width:160px;height:160px;object-fit:cover;border-radius:16px;border:2px solid #a8ecc0;display:block}
+.detail-name{font-size:15px;font-weight:600;color:#7dd9a0;margin-top:12px;text-align:center;display:flex;align-items:center;gap:6px}
 .part-row{display:flex;align-items:center;margin-bottom:12px;gap:12px}
 .part-label{font-size:13px;color:#6b7280;width:58px;flex-shrink:0}
-.part-label span{color:#f472b6}
-.counter{display:flex;align-items:center;flex:1;background:#fdf2f8;border-radius:12px;padding:6px 10px;gap:8px}
-.cnt-btn{width:32px;height:32px;border-radius:50%;border:1px solid #f9a8d4;background:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:#f472b6;flex-shrink:0}
-.cnt-btn:active{background:#fce7f3}
+.part-label span{color:#7dd9a0}
+.counter{display:flex;align-items:center;flex:1;background:#f2fcf6;border-radius:12px;padding:6px 10px;gap:8px}
+.cnt-btn{width:32px;height:32px;border-radius:50%;border:1px solid #a8ecc0;background:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:#7dd9a0;flex-shrink:0}
+.cnt-btn:active{background:#e6faf0}
 .cnt-val{flex:1;text-align:center;font-size:18px;font-weight:600;color:#374151}
 .filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;overflow-x:auto;padding-bottom:2px}
-.filter-btn{background:#fdf2f8;border:1px solid #f9a8d4;border-radius:20px;padding:4px 12px;font-size:12px;cursor:pointer;white-space:nowrap;color:#374151}
-.filter-btn.active{background:#f472b6;color:#fff;border-color:#f472b6}
+.filter-btn{background:#f2fcf6;border:1px solid #a8ecc0;border-radius:20px;padding:4px 12px;font-size:12px;cursor:pointer;white-space:nowrap;color:#374151}
+.filter-btn.active{background:#7dd9a0;color:#fff;border-color:#7dd9a0}
 .trade-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .trade-title{font-size:15px;font-weight:600;color:#374151}
-.trade-export-btn{background:#f472b6;color:#fff;border:none;border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px}
+.trade-export-btn{background:#7dd9a0;color:#fff;border:none;border-radius:20px;padding:6px 14px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px}
 .trade-empty{text-align:center;color:#9ca3af;padding:40px 0;font-size:14px}
 .trade-item{display:flex;align-items:center;gap:10px;padding:10px;background:#fff;border:1px solid #fde68a;border-radius:14px;margin-bottom:8px;cursor:pointer}
 .trade-item:active{background:#fffbeb}
-.trade-thumb{width:56px;height:56px;border-radius:10px;background:#fdf2f8;overflow:hidden;flex-shrink:0}
+.trade-thumb{width:56px;height:56px;border-radius:10px;background:#f2fcf6;overflow:hidden;flex-shrink:0}
 .trade-thumb img{width:100%;height:100%;object-fit:cover}
 .trade-info{flex:1;min-width:0}
 .trade-name{font-size:13px;font-weight:500;color:#374151;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -96,11 +96,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 .modal-box{background:#fff;border-radius:16px;padding:20px;max-width:320px;width:90%;text-align:center}
 .modal-box img{width:100%;border-radius:8px;margin-bottom:12px}
 .modal-box p{font-size:13px;color:#6b7280;margin-bottom:16px}
-.modal-close{background:#f472b6;color:#fff;border:none;border-radius:20px;padding:10px 24px;font-size:14px;cursor:pointer}
+.modal-close{background:#7dd9a0;color:#fff;border:none;border-radius:20px;padding:10px 24px;font-size:14px;cursor:pointer}
 .img-preview{display:flex;flex-direction:column;align-items:center;padding:16px;gap:12px}
-.img-preview img{width:100%;border-radius:8px;border:1px solid #f9a8d4}
-.img-preview-hint{font-size:13px;color:#6b7280;text-align:center;line-height:1.7;background:#fdf2f8;border-radius:10px;padding:12px 16px;width:100%}
-.img-preview-hint strong{color:#f472b6}
+.img-preview img{width:100%;border-radius:8px;border:1px solid #a8ecc0}
+.img-preview-hint{font-size:13px;color:#6b7280;text-align:center;line-height:1.7;background:#f2fcf6;border-radius:10px;padding:12px 16px;width:100%}
+.img-preview-hint strong{color:#7dd9a0}
 </style>
 </head>
 <body>
@@ -127,7 +127,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;ba
 <div class="toast" id="toast"></div>
 
 <script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzs0aXj5SLa9eKo5BsL4Jtja-EcsVno6UCSjFzXLO-RIQtM1oHjm6153M_hF2alhpTVLQ/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyxs8MPNf_Tj0Rbj_lcptS4gDlf9opvBF2UrA21KEjzdbbqsZ_gbI_C7HXj8cfNOAk8jw/exec';
 const PARTS = ['アクセ','トップス','ボトムス','シューズ'];
 const CACHE_TTL = 60 * 60 * 1000;
 
@@ -386,7 +386,7 @@ function itemRowHTML(danId,item,showDanLabel=false){
       <div class="item-name-row"><span class="heart">♡</span><span class="item-iname">${item.name}</span></div>
       <div class="parts-row">${chips}</div>
     </div>
-    <i class="ti ti-chevron-right" style="color:#f9a8d4;font-size:16px;flex-shrink:0"></i>
+    <i class="ti ti-chevron-right" style="color:#a8ecc0;font-size:16px;flex-shrink:0"></i>
   </div>`;
 }
 
@@ -572,7 +572,7 @@ async function exportTradeImage(){
   const overlay=document.createElement('div');
   overlay.id='export-overlay';
   overlay.style.cssText='position:fixed;inset:0;background:rgba(255,255,255,0.88);z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px';
-  overlay.innerHTML='<div class="spinner"></div><div style="font-size:14px;color:#f472b6;font-weight:500">画像を生成中...</div>';
+  overlay.innerHTML='<div class="spinner"></div><div style="font-size:14px;color:#7dd9a0;font-weight:500">画像を生成中...</div>';
   document.body.appendChild(overlay);
 
   try{
@@ -590,7 +590,7 @@ async function exportTradeImage(){
     ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
 
     // タイトル
-    ctx.fillStyle='#f472b6';ctx.font='bold 15px sans-serif';
+    ctx.fillStyle='#7dd9a0';ctx.font='bold 15px sans-serif';
     ctx.fillText('交換リスト（'+trades.length+'件）',PAD,PAD+15);
 
     for(let i=0;i<trades.length;i++){
@@ -617,7 +617,7 @@ async function exportTradeImage(){
         ctx.drawImage(img,ix,iy,THUMB,THUMB);
         ctx.restore();
       } else {
-        ctx.fillStyle='#fdf2f8';
+        ctx.fillStyle='#f2fcf6';
         roundRect(ctx,ix,iy,THUMB,THUMB,6);ctx.fill();
       }
 
@@ -681,7 +681,7 @@ function showImagePreview(dataUrl){
       <strong>画像を長押し</strong> して<br>「写真に追加」または「画像を保存」を選んでください
     </div>
     <img src="${dataUrl}" alt="交換リスト">
-    <button onclick="showTrade()" style="width:100%;background:#f472b6;color:#fff;border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:600;cursor:pointer">
+    <button onclick="showTrade()" style="width:100%;background:#7dd9a0;color:#fff;border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:600;cursor:pointer">
       <i class="ti ti-arrow-left"></i> 交換リストに戻る
     </button>
   </div>`);
