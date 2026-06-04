@@ -796,18 +796,6 @@ function roundRect(ctx,x,y,w,h,r){
   ctx.closePath();
 }
 
-// ---- topbarタップでスクロールトップ ----
-document.addEventListener('DOMContentLoaded',()=>{
-  const topbar=document.getElementById('topbar');
-  topbar.addEventListener('touchend',(e)=>{
-    e.preventDefault();
-    document.getElementById('content').scrollTop=0;
-  },{passive:false});
-  topbar.addEventListener('click',()=>{
-    document.getElementById('content').scrollTop=0;
-  });
-});
-
 // ---- 起動 ----
 // 初回起動時に全弾データをバックグラウンドでプリフェッチ
 async function prefetchAll(){
