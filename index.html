@@ -253,53 +253,42 @@ let saveLock=false;   // 通信中フラグ
 let saveTimer=null;
 
 function scheduleAutoSave(){
-  // 最新のeditCountsを予約。通信中でも上書きするので常に最新値になる
-  saveQueue={dan:currentDan,itemId:currentItem.id,...editCounts};
+  // ① 楽観的更新：先にキャッシュとUIを即時更新
+  const dan=currentDan, itemId=currentItem.id;
+  const cached=itemsCache[dan];
+  if(cached){
+    const idx=cached.findIndex(i=>i.id===itemId);
+    if(idx>=0){
+      Object.assign(cached[idx],{...editCounts});
+      lsSet('items_'+dan,cached);
+    }
+  }
+  currentItem={...currentItem,...editCounts};
+  dansCache=null;lsDel('dans');
+  if(screen==='dan'&&dan===currentDan) renderItemList(dan);
+
+  // ② バックグラウンドでGASに保存（UIは待たない）
+  saveQueue={dan,itemId,...editCounts};
   if(!saveLock) flushSaveQueue();
 }
 
 async function flushSaveQueue(){
   if(!saveQueue||saveLock) return;
   saveLock=true;
-  showSaving(true);
 
-  // 通信開始時点の最新値を取り出す
   const payload={action:'saveItem',...saveQueue};
-  const snapItem=currentItem ? {...currentItem} : null;
-  const snapDan=currentDan;
-  saveQueue=null; // 取り出したのでクリア
+  saveQueue=null;
 
   const res=await apiPost(payload).catch(()=>null);
   saveLock=false;
 
-  if(res&&res.success){
-    // キャッシュ更新
-    const cached=itemsCache[snapDan];
-    if(cached){
-      const idx=cached.findIndex(i=>i.id===payload.itemId);
-      if(idx>=0){
-        Object.assign(cached[idx],{アクセ:payload.アクセ,トップス:payload.トップス,ボトムス:payload.ボトムス,シューズ:payload.シューズ});
-        lsSet('items_'+snapDan,cached);
-      }
-    }
-    if(currentItem&&currentItem.id===payload.itemId){
-      currentItem={...currentItem,アクセ:payload.アクセ,トップス:payload.トップス,ボトムス:payload.ボトムス,シューズ:payload.シューズ};
-    }
-    dansCache=null;lsDel('dans');
-    showToast('✓ 保存しました');
-    // 弾リストの所持数表示をキャッシュから即時更新
-    if(screen==='item'&&snapDan===currentDan){
-      // アイテム画面のまま→ヘッダーの所持率だけ更新（再描画不要）
-    } else if(screen==='dan'&&snapDan===currentDan){
-      renderItemList(snapDan);
-    }
-  } else {
-    showToast('保存に失敗しました','#e24b4a');
+  if(!res||!res.success){
+    // 失敗時のみ通知（成功時は何も出さない）
+    showToast('⚠ 同期に失敗しました','#e24b4a');
   }
 
   // 通信中に新しい変更があればすぐ再送
   if(saveQueue) flushSaveQueue();
-  else showSaving(false);
 }
 
 function fmtPct(r){return Math.round(r*10)/10}
